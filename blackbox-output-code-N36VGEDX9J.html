@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Generator Stiker Lucu</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        header { background-color: #333; color: white; padding: 10px; text-align: center; }
+        nav { background-color: #444; padding: 10px; }
+        nav a { color: white; margin: 0 15px; text-decoration: none; }
+        nav a:hover { text-decoration: underline; }
+        .container { max-width: 800px; margin: 20px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; }
+        canvas { border: 2px solid #333; display: block; margin: 20px auto; }
+        input, select, button { padding: 10px; margin: 10px; display: inline-block; }
+        .sticker-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; margin-top: 20px; }
+        .sticker-item { text-align: center; }
+        .sticker-item img { width: 100px; height: 100px; border: 1px solid #ccc; border-radius: 8px; }
+        .sticker-item button { margin-top: 5px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        .sticker-item button:hover { background-color: #45a049; }
+        footer { text-align: center; padding: 10px; background-color: #333; color: white; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Website Generator Stiker Lucu</h1>
+    </header>
+    <nav>
+        <a href="#generate">Generate Stiker</a>
+        <a href="#gallery">Kumpulan Stiker</a>
+        <a href="#about">Tentang</a>
+    </nav>
+    
+    <div class="container" id="generate">
+        <h2>Generate Stiker Anda Sendiri</h2>
+        <input type="text" id="stickerText" placeholder="Masukkan teks stiker (mis: 'Halo Dunia!')" maxlength="50">
+        <select id="bgColor">
+            <option value="#ffeb3b">Kuning</option>
+            <option value="#ff5722">Merah</option>
+            <option value="#4caf50">Hijau</option>
+            <option value="#2196f3">Biru</option>
+        </select>
+        <select id="fontStyle">
+            <option value="Arial">Arial</option>
+            <option value="Comic Sans MS">Comic Sans</option>
+            <option value="Impact">Impact</option>
+        </select>
+        <button onclick="generateSticker()">Generate Stiker</button>
+        <br>
+        <canvas id="stickerCanvas" width="300" height="300"></canvas>
+        <br>
+        <button onclick="downloadSticker()">Download Stiker</button>
+    </div>
+    
+    <div class="container" id="gallery">
+        <h2>Kumpulan Stiker Lucu (Bisa Didownload)</h2>
+        <div class="sticker-gallery">
+            <!-- Contoh stiker (ganti URL dengan gambar asli Anda) -->
+            <div class="sticker-item">
+                <img src="https://via.placeholder.com/100?text=Stiker+Lucu+1" alt="Stiker Lucu 1">
+                <button onclick="downloadImage('https://via.placeholder.com/100?text=Stiker+Lucu+1')">Download</button>
+            </div>
+            <div class="sticker-item">
+                <img src="https://via.placeholder.com/100?text=Stiker+Lucu+2" alt="Stiker Lucu 2">
+                <button onclick="downloadImage('https://via.placeholder.com/100?text=Stiker+Lucu+2')">Download</button>
+            </div>
+            <div class="sticker-item">
+                <img src="https://via.placeholder.com/100?text=Stiker+Lucu+3" alt="Stiker Lucu 3">
+                <button onclick="downloadImage('https://via.placeholder.com/100?text=Stiker+Lucu+3')">Download</button>
+            </div>
+            <div class="sticker-item">
+                <img src="https://via.placeholder.com/100?text=Stiker+Lucu+4" alt="Stiker Lucu 4">
+                <button onclick="downloadImage('https://via.placeholder.com/100?text=Stiker+Lucu+4')">Download</button>
+            </div>
+            <div class="sticker-item">
+                <img src="https://via.placeholder.com/100?text=Stiker+Lucu+5" alt="Stiker Lucu 5">
+                <button onclick="downloadImage('https://via.placeholder.com/100?text=Stiker+Lucu+5')">Download</button>
+            </div>
+            <!-- Tambahkan lebih banyak stiker di sini -->
+        </div>
+    </div>
+    
+    <div class="container" id="about">
+        <h2>Tentang Website Ini</h2>
+        <p>Website ini memungkinkan Anda membuat stiker lucu dari teks sendiri atau mendownload dari kumpulan yang tersedia. Dibuat dengan HTML, CSS, dan JavaScript. Untuk fitur lebih lanjut, hubungi pengembang!</p>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Generator Stiker Lucu. Dibuat dengan ❤️.</p>
+    </footer>
+    
+    <script>
+        function generateSticker() {
+            const canvas = document.getElementById('stickerCanvas');
+            const ctx = canvas.getContext('2d');
+            const text = document.getElementById('stickerText').value;
+            const bgColor = document.getElementById('bgColor').value;
+            const fontStyle = document.getElementById('fontStyle').value;
+            
+            // Bersihkan canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Gambar background
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Tambah teks
+            ctx.fillStyle = '#000';
+            ctx.font = `24px ${fontStyle}`;
+            ctx.textAlign = 'center';
+            ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+        }
+        
+        function downloadSticker() {
+            const canvas = document.getElementById('stickerCanvas');
+            const link = document.createElement('a');
+            link.download = 'stiker-lucu.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        function downloadImage(url) {
+            const link = document.createElement('a');
+            link.download = 'stiker-lucu.png';
+            link.href = url;
+            link.click();
+        }
+    </script>
+</body>
+</html>
